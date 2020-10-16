@@ -88,36 +88,40 @@ public class App {
                                             sDado = guayabita.getJugadores().get(i).elegirDado();
                                             Icon dado2 = new ImageIcon(App.class.getResource("dado " + sDado + ".png"));
                                             apuesta = Integer.parseInt(JOptionPane.showInputDialog("Digite la cantidad que desea apostar"));
+
+                                            while(apuesta >guayabita.getJugadores().get(i).getDinero()) {
+                                                apuesta = Integer.parseInt(JOptionPane.showInputDialog("No tiene el dinero sufuciente\n" + "Su dinero es: "
+                                                        + guayabita.getJugadores().get(i).getDinero() +"\nEl pote es: "+ guayabita.getPoteInicial() +"\n Digite la cantidad que desea apostar"));
+                                            }
+
                                             JOptionPane.showMessageDialog(null, guayabita.getJugadores().get(i).getNombre() + ",este es tu dado", "Guayabita", 0, dado2);
 
-                                            if (dado < sDado)
-                                             {
-                                                 JOptionPane.showMessageDialog(null, "Felicitaciones acaba de ganar: " + apuesta);
-                                                 guayabita.getJugadores().get(i).sumaDinero(guayabita.getJugadores().get(i), apuesta);
-                                                guayabita.decrementoPote(apuesta);
-                                             }
-                                            else
-                                                {
-                                                    JOptionPane.showMessageDialog(null, "Lo siento acaba de perder: "+ apuesta);
+                                                if (dado < sDado) {
+                                                    JOptionPane.showMessageDialog(null, "Felicitaciones acaba de ganar: " + apuesta);
+                                                    guayabita.getJugadores().get(i).sumaDinero(guayabita.getJugadores().get(i), apuesta);
+                                                    guayabita.decrementoPote(apuesta);
+                                                } else {
+                                                    JOptionPane.showMessageDialog(null, "Lo siento acaba de perder: " + apuesta);
                                                     guayabita.getJugadores().get(i).restaDinero(guayabita.getJugadores().get(i), apuesta);
                                                     guayabita.incrementoPote(apuesta);
-                                                    if(guayabita.getJugadores().get(i).getDinero()<= 0)
-                                                    {
+                                                    if (guayabita.getJugadores().get(i).getDinero() <= 0) {
                                                         guayabita.getJugadores2().add(guayabita.getJugadores().get(i));
                                                         guayabita.getJugadores().remove(i);
 
-                                                       if(guayabita.getJugadores().size()==0)
-                                                        {
-                                                            JOptionPane.showMessageDialog(null, "No hay jugadores activo\n Perdieron su dinero " );
+                                                        if (guayabita.getJugadores().size() == 0) {
+                                                            JOptionPane.showMessageDialog(null, "No hay jugadores activo\n Perdieron su dinero ");
                                                             control = false;
                                                         }
                                                     }
                                                 }
+
                                         }
                                     }
                             }
                             if(guayabita.getPoteInicial()==0)
                             {
+                                JOptionPane.showMessageDialog(null, "El juego Finalizo \n El pote esta en 0 " +
+                                        "\n La informacion de los juegadores se ve a continuacion " );
                                 break;
                             }
                         }
@@ -133,7 +137,7 @@ public class App {
                     if(guayabita.getPoteInicial() == 0 || guayabita.getJugadores().size() == 0)
                     {
                             for (int i = 0;i<guayabita.getJugadores2().size();i++) {
-                            JOptionPane.showMessageDialog(null, guayabita.getJugadores2().get(i).getNombre() + " tiene " + guayabita.getJugadores2().get(i).getDinero());
+                            JOptionPane.showMessageDialog(null,  "El dinero del jugador "+ guayabita.getJugadores2().get(i).getNombre() +" es: " + guayabita.getJugadores2().get(i).getDinero());
                          }
                     }
                     guayabita.getJugadores().clear();
